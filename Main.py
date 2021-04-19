@@ -30,7 +30,7 @@ if user_Selection.lower() == "new game" or user_Selection == "1":
     data.close()
 
 if user_Selection.lower() == "continue" or user_Selection == "2":
-    savedName = input("Enter Saved Name: ")
+    savedName = input("Enter Saved Game Name: ")
     
     data = open(f"./Saved_Game_Data/{savedName}.txt", "r")
     playerName = data.readline()
@@ -40,8 +40,8 @@ if user_Selection.lower() == "continue" or user_Selection == "2":
     playerClass = data.readline()
     data.close()
     
-if user_Selection.lower() == "options":
+if user_Selection.lower() == "options" or user_Selection == "3":
     Story.options_Menu()
 
-if user_Selection.lower() == "exit":
+if user_Selection.lower() == "exit" or user_Selection == "4":
     quit()
