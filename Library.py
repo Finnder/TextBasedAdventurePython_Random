@@ -1,7 +1,6 @@
 import sys
 import time
 import random
-from Encounters import pathEncounters
 from colorama import init
 from colorama import Fore, Back, Style
 
