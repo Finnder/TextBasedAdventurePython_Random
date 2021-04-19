@@ -1,10 +1,12 @@
 import sys
-import simpleaudio
-from termcolor import cprint, colored
 import time
 import random
 from Encounters import pathEncounters
+from colorama import init
+from colorama import Fore, Back, Style
 
+# Colorama init
+init(autoreset=True)
 
 class create_new_Player:
     def __init__(self, Name, Health, Mana, Kit, Level):
@@ -19,41 +21,39 @@ def rng(min, max):
     x = random.randint(min, max)
     return x
 
-
 def new_Player():
     global Health
     global Mana
     global Kit
 
-    Name = input("Please Enter A Name: ")
-    Level = 1
+    try:
+        Name = input("  Enter Your New Characters Name: ")
+        Level = 1
 
-    cprint(" --- Choose A Class | Guardian, Archer, Or Mage --- ", "cyan")
-    playerClass = input("-> ")
+        print(Fore.GREEN + "-- Choose A Class | Guardian, Archer, Or Mage --")
 
-    if playerClass.lower() == "guardian":
-        Kit = "Guardian"
-        Health = 180
-        Mana = 0
+        playerClass = input("-> ")
 
-    if playerClass.lower() == "archer":
-        Kit = "Archer"
-        Health = 100
-        Mana = 0
+        if playerClass.lower() == "guardian":
+            Kit = "Guardian"
+            Health = 180
+            Mana = 0
 
-    if playerClass.lower() == "mage":
-        Kit = "Mage"
-        Health = 120
-        Mana = 100
+        if playerClass.lower() == "archer":
+            Kit = "Archer"
+            Health = 100
+            Mana = 0
 
-    Player = create_new_Player(Name, Health, Mana, Kit, Level)
-    return Player
+        if playerClass.lower() == "mage":
+            Kit = "Mage"
+            Health = 120
+            Mana = 100
 
-
-def playMusic(musicfile):
-    x = simpleaudio.WaveObject.from_wave_file(musicfile)
-    x.play()
-
+        Player = create_new_Player(Name, Health, Mana, Kit, Level)
+        return Player
+    
+    except:
+        print(Fore.RED + "[ERROR CREATING CHARACTER]")
 
 def slowType(str):
     x = 0.001
@@ -71,14 +71,21 @@ def storyType(str):
 
 
 def storyPrint(str):
-    colored(storyType(str), "blue")
+    storyType(str)
 
 
 def randomPath():
     randomnum = rng(1, 3)
     if randomnum == 1:
         pathEncounters.cavern_Path()
+
     if randomnum == 2:
         pathEncounters.mountain_Path()
+
     if randomnum == 3:
         pathEncounters.swamp_Path()
+
+def Main():
+     Story.intro()
+     Library.randomPath()
+     userInput = input(">")
