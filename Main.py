@@ -1,13 +1,19 @@
 import os
 
-import Library, Game_Mechanics, Story
-import random
+from colorama import Fore, Back
 from colorama import init
-from colorama import Fore, Back, Style
+import simpleaudio as sa
+import Library
+import Story
+import Music
+import Paths
 
 # Colorama init
 init(autoreset=True)
 
+# Menu Music
+menuMusic = sa.WaveObject.from_wave_file('Music/menuMusic.wav')
+isMenuMusicActive = False
 
 def options_Menu():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -33,10 +39,21 @@ def options_Menu():
         startup_Menu()
 
     # If you want to add modifications to the game
-    if optionsChoice.lower() == "modifiers" or optionsChoice == "2":
+    elif optionsChoice.lower() == "modifiers" or optionsChoice == "2":
         pass
 
-def startup_Menu():
+    else:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        startup_Menu(isMenuMusicActive)
+
+
+def startup_Menu(music):
+
+    if music:
+        menuMusic.play()
+    if not music:
+        pass
+
     print(
         f""" 
 Hello, Welcome To Finn's RPG and Text Base Adventure!!!
@@ -60,6 +77,7 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
         playerClass = player.Kit
         playerCurrentXP = player.XP
         playerMaxXP = player.MaxXP
+        playerDamage = player.Damage
 
         # Writing the save data for new player
         data = open(f"./Saved_Game_Data/{playerName}.txt", "w")
@@ -69,6 +87,8 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
         data.write(f"{playerMana}\n")
         data.write(f"{playerClass}\n")
         data.write(f"{playerCurrentXP}")
+        data.write(f"{playerMaxXP}")
+        data.write(f"{playerDamage}")
         data.close()
 
         Story.intro()
@@ -77,13 +97,18 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
         savedName = input("Enter Saved Game Name: ")
 
         data = open(f"./Saved_Game_Data/{savedName}.txt", "r")
-        playerName = data.readline()
-        playerLevel = data.readline()
-        playerHealth = data.readline()
-        playerMana = data.readline()
-        playerClass = data.readline()
-        playerCurrentXP = data.readline()
+        Library.Name = data.readline()
+        Library.Level = data.readline()
+        Library.Health = data.readline()
+        Library.Mana = data.readline()
+        Library.Kit = data.readline()
+        Library.XP = data.readline()
+        Library.MaxXP = data.readline()
+        Library.Damage = data.readline()
         data.close()
+
+        Library.continueOrShowStats(True)
+        Story.intro()
 
     if user_Selection.lower() == "options" or user_Selection == "3":
         options_Menu()
@@ -92,4 +117,4 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
         quit()
 
 # Initial Start Up
-startup_Menu()
+startup_Menu(isMenuMusicActive)

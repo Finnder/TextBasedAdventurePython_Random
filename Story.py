@@ -1,10 +1,9 @@
-import os
-
-import Music
 from Library import *
 from colorama import init
-from colorama import Fore, Back, Style
 import pyttsx3
+import Paths
+import Fights
+import Library
 
 speechEngine = pyttsx3.init()
 
@@ -18,18 +17,22 @@ def intro():
     Your parents say you should stay in the village where its safe, but something is driving you to explore the world.
     """
     storyPrint(text)
-    speechEngine.say(text)
-    speechEngine.runAndWait()
-    speechEngine.stop()
+    #speechEngine.say(text)
+    #speechEngine.runAndWait()
+    #speechEngine.stop()
 
     print(" ")
-    input("Press Enter To Continue")
-
+    continueOrShowStats(True)
     NewPath()
+    continueOrShowStats(False)
+    NewFight()
 
 # Generates random path for player
 def NewPath():
-    pass
+    Paths.RandomPath()
+
+def NewFight():
+    Fights.RandomBasicEnemy()
 
 
 
