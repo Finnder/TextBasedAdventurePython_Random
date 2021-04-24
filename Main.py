@@ -86,8 +86,8 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
         data.write(f"{playerHealth}\n")
         data.write(f"{playerMana}\n")
         data.write(f"{playerClass}\n")
-        data.write(f"{playerCurrentXP}")
-        data.write(f"{playerMaxXP}")
+        data.write(f"{playerCurrentXP}\n")
+        data.write(f"{playerMaxXP}\n")
         data.write(f"{playerDamage}")
         data.close()
 

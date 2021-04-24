@@ -91,11 +91,11 @@ def continueOrShowStats(stats):
     if stats:
         userInput = input("Press Enter To Continue OR Type 1 To Show Your Stats")
         if userInput == "1":
-            print(f"Current XP: {XP}")
-            print(f"Max XP: {Fore.GREEN + MaxXP}")
-            print(f"Current Level: {Fore.CYAN + Level}")
-            print(f"Health: {Fore.RED + Health}")
-            print(f"Damage: {Fore.LIGHTRED_EX + Damage}")
+            print(Fore.LIGHTGREEN_EX + f"Current XP: {XP}")
+            print(Fore.GREEN + f"Max XP: {MaxXP}")
+            print(Fore.CYAN + f"Current Level: {Level}")
+            print(Fore.RED + f"Health: {Health}")
+            print(Fore.LIGHTRED_EX + f"Damage: {Damage}")
             if Kit.lower() == "mage":
                 print(Fore.BLUE + f"Mana: {Mana}")
             continueOrShowStats(False)

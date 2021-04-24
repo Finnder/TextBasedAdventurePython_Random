@@ -2,6 +2,7 @@ import random
 import time
 
 import Library
+import Story
 from colorama import init
 from colorama import Fore, Back, Style
 
@@ -9,7 +10,6 @@ init(autoreset=True)
 # ALL FIGHT ENCOUNTERS IN THE WORLD
 
 battleIsON = True
-
 
 def RandomBasicEnemy():
     global random_enemy
@@ -22,17 +22,18 @@ def RandomBasicEnemy():
         Random_Move()
         Player_Move()
         if random_enemy.enemyHP <= 0:
+            print(" ")
+            print(Fore.YELLOW + "The Enemy Was Slain!!")
             break
 
+    Story.intro()
 
 def Random_Move():
-    move = random.randint(1, 3)
+    move = random.randint(1, 2)
     if move == 1:
         EnemyAttacks()
     if move == 2:
         EnemyDefends()
-    if move == 3:
-        print(Back.WHITE + Fore.BLACK + "Enemy Passed His Turn")
 
 
 def Random_Enemy():
@@ -44,7 +45,10 @@ def Random_Enemy():
 
 
 def EnemyAttacks():
+    global playerHealth
     enemyDamageToDeal = random.randint(random_enemy.enemyDamagePerHitMin, random_enemy.enemyDamagePerHitMax)
+    playerHealth -= enemyDamageToDeal
+    Library.Health = str(playerHealth)
     print(Fore.RED + f"Enemy Attacks! Dealing {Fore.LIGHTRED_EX + str(enemyDamageToDeal)} Total Damage!")
     print(" ")
     time.sleep(2)
@@ -66,7 +70,7 @@ def Player_Move():
 
 def PlayerAttacks():
     print(f"You dealt {Library.Damage} To The Enemy!")
-    random_enemy.enemyHP = random_enemy.enemyHP - Library.Damage
+    random_enemy.enemyHP = random_enemy.enemyHP - int(Library.Damage)
 
 
 class Enemy:
