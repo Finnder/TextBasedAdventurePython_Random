@@ -36,7 +36,8 @@ def options_Menu():
 
         # Clear Terminal and Show Menu
         os.system('cls' if os.name == 'nt' else 'clear')
-        startup_Menu()
+
+        startup_Menu(False)
 
     # If you want to add modifications to the game
     elif optionsChoice.lower() == "modifiers" or optionsChoice == "2":
@@ -68,6 +69,8 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
     user_Selection = input("> ")
 
     if user_Selection.lower() == "new game" or user_Selection == "1":
+        global player
+
         # New Player Set-Up
         player = Library.new_Player()
         playerName = player.Name

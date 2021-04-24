@@ -7,6 +7,16 @@ from colorama import Fore, Back, Style
 # Colorama init
 init(autoreset=True)
 
+
+Damage = None
+XP = None
+MaxXP = None
+Kit = None
+Health = None
+Level = None
+Name = None
+
+
 class create_new_Player:
     def __init__(self, Name, Health, Mana, Kit, Level, XP, MaxXP, Damage):
         self.Name = Name
@@ -23,14 +33,7 @@ def rng(min, max):
     return x
 
 def new_Player():
-    global Name
-    global Health
     global Mana
-    global Kit
-    global XP
-    global MaxXP
-    global Level
-    global Damage
 
     try:
         Name = input("  Enter Your New Characters Name: ")
@@ -103,3 +106,16 @@ def continueOrShowStats(stats):
     if not stats:
         userInput = input("Press Enter To Continue")
 
+
+def SAVE_GAME():
+    filePath = f"Saved_Game_Data/{Name}.txt"
+    file = open(filePath, "w")
+    file.write(Name + "\n")
+    file.write(Level + "\n")
+    file.write(Health + "\n")
+    file.write(Mana + "\n")
+    file.write(Kit + "\n")
+    file.write(XP + "\n")
+    file.write(MaxXP + "\n")
+    file.write(Damage + "\n")
+    file.close()
