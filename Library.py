@@ -11,10 +11,10 @@ init(autoreset=True)
 Damage = None
 XP = None
 MaxXP = None
-Kit = None
+Kit = " "
 Health = None
 Level = None
-Name = None
+Name = ""
 
 
 class create_new_Player:
@@ -33,7 +33,12 @@ def rng(min, max):
     return x
 
 def new_Player():
+    global Kit
+    global Health
     global Mana
+    global XP
+    global MaxXP
+    global Damage
 
     try:
         Name = input("  Enter Your New Characters Name: ")
@@ -108,14 +113,14 @@ def continueOrShowStats(stats):
 
 
 def SAVE_GAME():
-    filePath = f"Saved_Game_Data/{Name}.txt"
+    print(Name)
+    filePath = 'Saved_Game_Data/ay.txt'
     file = open(filePath, "w")
-    file.write(Name + "\n")
-    file.write(Level + "\n")
-    file.write(Health + "\n")
-    file.write(Mana + "\n")
-    file.write(Kit + "\n")
-    file.write(XP + "\n")
-    file.write(MaxXP + "\n")
-    file.write(Damage + "\n")
+    file.write(f"{Name}\n")
+    file.write(f"{Level}\n")
+    file.write(f"{Health}\n")
+    file.write(f"{Kit}\n")
+    file.write(f"{XP}\n")
+    file.write(f"{MaxXP}\n")
+    file.write(f"{Damage}\n")
     file.close()

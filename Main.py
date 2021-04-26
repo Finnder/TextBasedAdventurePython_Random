@@ -41,7 +41,15 @@ def options_Menu():
 
     # If you want to add modifications to the game
     elif optionsChoice.lower() == "modifiers" or optionsChoice == "2":
-        pass
+        print("Music - OFF")
+        print("Type Writer Effect - ON")
+        userInput = input(">")
+        if userInput.lower() == "music" or "1":
+            global isMenuMusicActive
+            if isMenuMusicActive:
+                isMenuMusicActive = False
+            else:
+                isMenuMusicActive = True
 
     else:
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -69,7 +77,6 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
     user_Selection = input("> ")
 
     if user_Selection.lower() == "new game" or user_Selection == "1":
-        global player
 
         # New Player Set-Up
         player = Library.new_Player()
@@ -99,16 +106,23 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
     if user_Selection.lower() == "continue" or user_Selection == "2":
         savedName = input("Enter Saved Game Name: ")
 
-        data = open(f"./Saved_Game_Data/{savedName}.txt", "r")
-        Library.Name = data.readline()
-        Library.Level = data.readline()
-        Library.Health = data.readline()
-        Library.Mana = data.readline()
-        Library.Kit = data.readline()
-        Library.XP = data.readline()
-        Library.MaxXP = data.readline()
-        Library.Damage = data.readline()
-        data.close()
+        try:
+            data = open(f"./Saved_Game_Data/{savedName}.txt", "r")
+            Library.Name = data.readline()
+            Library.Level = data.readline()
+            Library.Health = data.readline()
+            Library.Mana = data.readline()
+            Library.Kit = data.readline()
+            Library.XP = data.readline()
+            Library.MaxXP = data.readline()
+            Library.Damage = data.readline()
+            data.close()
+        except FileNotFoundError:
+            print(Fore.RED + "THE NAME YOU ENTERED DOES NOT EXIST.")
+            input(" ")
+            os.system('cls' if os.name == 'nt' else 'clear')
+
+            startup_Menu(isMenuMusicActive)
 
         Library.continueOrShowStats(True)
         Story.intro()
