@@ -41,15 +41,22 @@ def options_Menu():
 
     # If you want to add modifications to the game
     elif optionsChoice.lower() == "modifiers" or optionsChoice == "2":
-        print("Music - OFF")
-        print("Type Writer Effect - ON")
+        if isMenuMusicActive:
+            print("Music - ON")
+        else:
+            print("Music - OFF")
+
         userInput = input(">")
         if userInput.lower() == "music" or "1":
             global isMenuMusicActive
             if isMenuMusicActive:
+                os.system('cls' if os.name == 'nt' else 'clear')
                 isMenuMusicActive = False
+                startup_Menu(isMenuMusicActive)
             else:
+                os.system('cls' if os.name == 'nt' else 'clear')
                 isMenuMusicActive = True
+                startup_Menu(isMenuMusicActive)
 
     else:
         os.system('cls' if os.name == 'nt' else 'clear')
