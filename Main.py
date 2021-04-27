@@ -1,5 +1,6 @@
 import os
 
+import pickle
 from colorama import Fore, Back
 from colorama import init
 import simpleaudio as sa
@@ -16,6 +17,7 @@ menuMusic = sa.WaveObject.from_wave_file('Music/menuMusic.wav')
 isMenuMusicActive = False
 
 def options_Menu():
+    global isMenuMusicActive
     os.system('cls' if os.name == 'nt' else 'clear')
     print(Fore.BLUE + "--- OPTIONS MENU ---")
     print(Fore.LIGHTRED_EX + """
@@ -46,9 +48,13 @@ def options_Menu():
         else:
             print("Music - OFF")
 
+        if Library.speechEngineActive:
+            print("Text To Speech - ON")
+        else:
+            print("Text To Speech - OFF")
+
         userInput = input(">")
         if userInput.lower() == "music" or "1":
-            global isMenuMusicActive
             if isMenuMusicActive:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 isMenuMusicActive = False
@@ -57,14 +63,18 @@ def options_Menu():
                 os.system('cls' if os.name == 'nt' else 'clear')
                 isMenuMusicActive = True
                 startup_Menu(isMenuMusicActive)
+        if userInput.lower() == "texttospeech" or "2" or "tts":
+            if Library.speechEngineActive:
+                Library.speechEngineActive = False
+            else:
+                Library.speechEngineActive = True
+
 
     else:
         os.system('cls' if os.name == 'nt' else 'clear')
         startup_Menu(isMenuMusicActive)
 
-
 def startup_Menu(music):
-
     if music:
         menuMusic.play()
     if not music:
@@ -74,10 +84,10 @@ def startup_Menu(music):
         f""" 
 Hello, Welcome To Finn's RPG and Text Base Adventure!!!
 -------------------------------------------------------
--> New Game
---> Continue
----> Options
-----> Exit
+ -> New Game
+ --> Continue
+ ---> Options
+ ----> Exit
     """
     )
 
@@ -96,17 +106,10 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
         playerMaxXP = player.MaxXP
         playerDamage = player.Damage
 
+        DATA = [playerName, playerLevel, playerHealth, playerMana, playerClass, playerCurrentXP, playerMaxXP, playerDamage]
+
         # Writing the save data for new player
-        data = open(f"./Saved_Game_Data/{playerName}.txt", "w")
-        data.write(f"{playerName}\n")
-        data.write(f"{playerLevel}\n")
-        data.write(f"{playerHealth}\n")
-        data.write(f"{playerMana}\n")
-        data.write(f"{playerClass}\n")
-        data.write(f"{playerCurrentXP}\n")
-        data.write(f"{playerMaxXP}\n")
-        data.write(f"{playerDamage}")
-        data.close()
+        pickle.dump(DATA, open(f"Saved_Game_Data/{playerName}.dat", "wb"))
 
         Story.intro()
 
@@ -114,22 +117,25 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
         savedName = input("Enter Saved Game Name: ")
 
         try:
-            data = open(f"./Saved_Game_Data/{savedName}.txt", "r")
-            Library.Name = data.readline()
-            Library.Level = data.readline()
-            Library.Health = data.readline()
-            Library.Mana = data.readline()
-            Library.Kit = data.readline()
-            Library.XP = data.readline()
-            Library.MaxXP = data.readline()
-            Library.Damage = data.readline()
-            data.close()
+            # Retrieving data from save file
+            SaveLoaded = pickle.load(open(f"Saved_Game_Data/{savedName}.dat", "rb"))
+            Library.Name = SaveLoaded[0]
+            Library.Level = SaveLoaded[1]
+            Library.Health = SaveLoaded[2]
+            Library.Mana = SaveLoaded[3]
+            Library.Kit = SaveLoaded[4]
+            Library.XP = SaveLoaded[5]
+            Library.MaxXP = SaveLoaded[6]
+            Library.Damage = SaveLoaded[7]
+
         except FileNotFoundError:
             print(Fore.RED + "THE NAME YOU ENTERED DOES NOT EXIST.")
             input(" ")
             os.system('cls' if os.name == 'nt' else 'clear')
 
             startup_Menu(isMenuMusicActive)
+        except OSError:
+            print(OSError)
 
         Library.continueOrShowStats(True)
         Story.intro()

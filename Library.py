@@ -3,10 +3,13 @@ import time
 import random
 from colorama import init
 from colorama import Fore, Back, Style
+import pyttsx3
+import pickle
+
+speechEngine = pyttsx3.init()
 
 # Colorama init
 init(autoreset=True)
-
 
 Damage = None
 XP = None
@@ -16,6 +19,7 @@ Health = None
 Level = None
 Name = ""
 
+speechEngineActive = False
 
 class create_new_Player:
     def __init__(self, Name, Health, Mana, Kit, Level, XP, MaxXP, Damage):
@@ -33,20 +37,22 @@ def rng(min, max):
     return x
 
 def new_Player():
-    global Kit
+    global Name
+    global Level
     global Health
+    global Kit
     global Mana
     global XP
     global MaxXP
     global Damage
 
     try:
-        Name = input("  Enter Your New Characters Name: ")
+        Name = input(" Enter Your New Characters Name: ")
         Level = 1
 
         print(Fore.GREEN + "-- Choose A Class | Guardian, Archer, Or Mage --")
 
-        playerClass = input("-> ")
+        playerClass = input("> ")
 
         if playerClass.lower() == "guardian":
             Kit = "Guardian"
@@ -84,7 +90,6 @@ def slowType(str):
         sys.stdout.write(letter)
         time.sleep(x)
 
-
 def storyType(str):
     x = 0.01
     for letter in str:
@@ -92,8 +97,12 @@ def storyType(str):
             sys.stdout.write(char)
             time.sleep(x)
 
-def storyPrint(str):
-    storyType(str)
+def storyPrint(text):
+    storyType(text)
+    if speechEngineActive:
+        speechEngine.say(text)
+        speechEngine.runAndWait()
+        speechEngine.stop()
 
 def continueOrShowStats(stats):
     if stats:
@@ -111,16 +120,10 @@ def continueOrShowStats(stats):
     if not stats:
         userInput = input("Press Enter To Continue")
 
-
 def SAVE_GAME():
-    print(Name)
-    filePath = 'Saved_Game_Data/ay.txt'
-    file = open(filePath, "w")
-    file.write(f"{Name}\n")
-    file.write(f"{Level}\n")
-    file.write(f"{Health}\n")
-    file.write(f"{Kit}\n")
-    file.write(f"{XP}\n")
-    file.write(f"{MaxXP}\n")
-    file.write(f"{Damage}\n")
-    file.close()
+    DATA_ARRAY = [Name, Level, Health, Mana, Kit, XP, MaxXP, Damage]
+    pickle.dump(DATA_ARRAY, open(f"Saved_Game_Data/{Name}.dat", "wb"))
+
+
+
+

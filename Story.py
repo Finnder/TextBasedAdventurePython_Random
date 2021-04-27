@@ -5,8 +5,6 @@ import Paths
 import Fights
 import Library
 
-speechEngine = pyttsx3.init()
-
 # Colorama init
 init(autoreset=True)
 
@@ -17,9 +15,6 @@ def intro():
     Your parents say you should stay in the village where its safe, but something is driving you to explore the world.
     """
     storyPrint(text)
-    #speechEngine.say(text)
-    #speechEngine.runAndWait()
-    #speechEngine.stop()
 
     print(" ")
     continueOrShowStats(True)
