@@ -1,6 +1,7 @@
 import random
 import time
 
+import os
 import Library
 import Story
 from colorama import init
@@ -13,6 +14,7 @@ battleIsON = True
 xpGainPerEnemy = 10
 
 def RandomBasicEnemy():
+    os.system('cls' if os.name == 'nt' else 'clear')
     global random_enemy
     rng = random.randint(1, 3)
     random_enemy = Random_Enemy()

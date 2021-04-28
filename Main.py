@@ -6,6 +6,7 @@ from colorama import init
 import simpleaudio as sa
 import Library
 import Story
+from PIL import Image
 import Music
 import Paths
 
@@ -134,8 +135,6 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
             os.system('cls' if os.name == 'nt' else 'clear')
 
             startup_Menu(isMenuMusicActive)
-        except OSError:
-            print(OSError)
 
         Library.continueOrShowStats(True)
         Story.intro()
