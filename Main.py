@@ -28,6 +28,7 @@ def options_Menu():
 
     optionsChoice = input(">")
 
+    # Shows Saved Games
     if optionsChoice.lower() == "manage saves" or optionsChoice == "1":
         print(Fore.GREEN + Back.BLACK + "--- SAVED GAMES ---")
         for file in os.listdir('Saved_Game_Data'):
