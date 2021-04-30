@@ -51,6 +51,7 @@ def new_Player():
     global Coin
 
     try:
+        # Initial Values
         Name = input(" Enter Your New Characters Name: ")
         Level = 1
         Coin = 0
