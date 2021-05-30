@@ -108,8 +108,9 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
         playerCurrentXP = player.XP
         playerMaxXP = player.MaxXP
         playerDamage = player.Damage
+        playerCoin = player.Coin
 
-        DATA = [playerName, playerLevel, playerHealth, playerMaxHealth, playerMana, playerClass, playerCurrentXP, playerMaxXP, playerDamage]
+        DATA = [playerName, playerLevel, playerHealth, playerMaxHealth, playerMana, playerClass, playerCurrentXP, playerMaxXP, playerDamage, playerCoin]
 
         # Writing the save data for new player
         pickle.dump(DATA, open(f"Saved_Game_Data/{playerName}.dat", "wb"))
@@ -131,6 +132,7 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
             Library.XP = SaveLoaded[6]
             Library.MaxXP = SaveLoaded[7]
             Library.Damage = SaveLoaded[8]
+            Library.Coin = SaveLoaded[9]
 
         except FileNotFoundError:
             print(Fore.RED + "THE FILE-NAME YOU ENTERED DOES NOT EXIST.")

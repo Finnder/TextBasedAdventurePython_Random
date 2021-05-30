@@ -12,6 +12,9 @@ battleIsON = True
 
 resistnextattack = False
 
+playerCoinGainOnLevel = 20
+
+
 # Called When Combat Sequence Starts
 def RandomBasicEnemy():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -29,22 +32,24 @@ def RandomBasicEnemy():
 
         # When Enemy Dies
         if random_enemy.enemyHP <= 0:
+
+            coinGainOnKill = Library.OnKillEnemyCoinGain(8, 15)
             print(" ")
             print(Fore.YELLOW + "The Enemy Was Slain!!")
             print(Fore.LIGHTYELLOW_EX + f"You Gained {Library.XpGainPerEnemy} XP!")
-            playerXP = int(Library.XP)
-            playerXP += Library.XpGainPerEnemy
-            Library.XP = str(playerXP)
+            print(Fore.YELLOW + f"You Looted The Body And Gained {coinGainOnKill} Coins")
+           
+            Library.XP += Library.XpGainPerEnemy
+            Library.Coin += coinGainOnKill
 
-            # When Enemy Levels Up
-            if playerXP >= 100:
+            # When Player Levels Up
+            if Library.XP >= 100:
                 print(Fore.LIGHTBLUE_EX + "LEVEL UP!")
-                playerXP = int(Library.XP)
-                playerXP = 0
-                Library.XP = str(playerXP)
-                playerLevel = int(Library.Level)
-                playerLevel += 1
-                Library.Level = str(playerLevel)
+                Library.XP = 0
+                Library.Level += 1
+                Library.Coin += playerCoinGainOnLevel
+                print(Fore.LIGHTYELLOW_EX + f"You Gained {playerCoinGainOnLevel} Coin For Leveling Up!")
+
             break
 
     Story.intro()
@@ -68,13 +73,12 @@ def Random_Enemy():
 # When The Enemy Attacks
 def EnemyAttacks():
     enemyDamageToDeal = random.randint(random_enemy.enemyDamagePerHitMin, random_enemy.enemyDamagePerHitMax)
-    playerHealth = int(Library.Health)
-    playerHealth -= enemyDamageToDeal
-    Library.Health = str(playerHealth)
+    Library.Health -= enemyDamageToDeal 
+    
     Library.SAVE_GAME()
 
     print(Fore.RED + f"Enemy Attacks! Dealing {Fore.LIGHTRED_EX + str(enemyDamageToDeal)} Total Damage!")
-    print(f"Player Now Has {Fore.LIGHTRED_EX + Library.Health} Health")
+    print(f"Player Now Has {Fore.LIGHTRED_EX + str(Library.Health)} Health")
     print(" ")
     time.sleep(1)
 

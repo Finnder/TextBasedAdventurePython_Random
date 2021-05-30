@@ -14,6 +14,10 @@ init(autoreset=True)
 
 XpGainPerEnemy = 10
 
+def OnKillEnemyCoinGain(min, max):
+    return random.randint(min, max)
+    
+
 Damage = 0
 XP = 0
 MaxXP = 0
@@ -27,7 +31,7 @@ Coin = 0
 speechEngineActive = False
 
 class create_new_Player:
-    def __init__(self, Name, Health, MaxHealth, Mana, Kit, Level, XP, MaxXP, Damage):
+    def __init__(self, Name, Health, MaxHealth, Mana, Kit, Level, XP, MaxXP, Damage, Coin):
         self.Name = Name
         self.Health = Health
         self.MaxHealth = MaxHealth
@@ -37,6 +41,7 @@ class create_new_Player:
         self.XP = XP
         self.MaxXP = MaxXP
         self.Damage = Damage
+        self.Coin = Coin
 
 def rng(min, max):
     x = random.randint(min, max)
@@ -58,7 +63,6 @@ def new_Player():
         # Initial Values
         Name = input(" Enter Your New Characters Name: ")
         Level = 1
-        Coin = 0
         XP = 0
         MaxXP = 100
 
@@ -72,6 +76,7 @@ def new_Player():
             Health = MaxHealth
             Mana = 0
             Damage = 5
+            Coin = 20
 
         if playerClass.lower() == "archer":
             Kit = "Archer"
@@ -79,6 +84,7 @@ def new_Player():
             Health = MaxHealth
             Mana = 0
             Damage = 8
+            Coin = 20
 
         if playerClass.lower() == "mage":
             Kit = "Mage"
@@ -86,8 +92,9 @@ def new_Player():
             Health = MaxHealth
             Mana = 100
             Damage = 6
+            Coin = 20
 
-        Player = create_new_Player(Name, Health, MaxHealth, Mana, Kit, Level, XP, MaxXP, Damage)
+        Player = create_new_Player(Name, Health, MaxHealth, Mana, Kit, Level, XP, MaxXP, Damage, Coin)
         return Player
 
     except:
@@ -117,20 +124,25 @@ def continueOrShowStats(stats):
     if stats:
         userInput = input("Press Enter To Continue OR Type 1 To Show Your Stats")
         if userInput == "1":
-            print(Fore.LIGHTGREEN_EX + f"Current XP: {XP}")
-            print(Fore.GREEN + f"Max XP: {MaxXP}")
-            print(Fore.CYAN + f"Current Level: {Level}")
-            print(Fore.RED + f"Health: {Health}")
-            print(Fore.LIGHTRED_EX + f"Damage: {Damage}")
+            print(" ")
+            print("================|")
+            print(Fore.LIGHTGREEN_EX + f"Current XP: {XP}"+Fore.GREEN +  "   |")
+            print(Fore.GREEN + f"Max XP: {MaxXP}"+ Fore.GREEN + Fore.GREEN + "     |")
+            print(Fore.CYAN + f"Current Level: {Level}"+Fore.GREEN +  "|")
+            print(Fore.RED + f"Health: {Health}"+ Fore.GREEN + "     |")
+            print(Fore.LIGHTRED_EX + f"Damage: {Damage}" +Fore.GREEN +  "       |")
+            print(Fore.YELLOW + f"Coin: {Coin}"+ Fore.GREEN + "        |")
             if Kit.lower() == "mage":
-                print(Fore.BLUE + f"Mana: {Mana}")
+                print(Fore.BLUE + f"Mana: {Mana}" + Fore.GREEN + "       |")
+            print("================|")
+            print(" ")
             continueOrShowStats(False)
 
     if not stats:
         userInput = input("Press Enter To Continue")
 
 def SAVE_GAME():
-    DATA_ARRAY = [Name, Level, Health, MaxHealth, Mana, Kit, XP, MaxXP, Damage]
+    DATA_ARRAY = [Name, Level, Health, MaxHealth, Mana, Kit, XP, MaxXP, Damage, Coin]
     pickle.dump(DATA_ARRAY, open(f"Saved_Game_Data/{Name}.dat", "wb"))
 
 def Random_Shop_Keeper_Items():
@@ -143,8 +155,8 @@ def Random_Shop_Keeper_Items():
     global XPBoost
     global XPGain
     global XP
-
     global XpGainPerEnemy
+    global Coin
 
     i = 0
     RNG_ARRAY = []
@@ -156,75 +168,154 @@ def Random_Shop_Keeper_Items():
     XPBoost = False
     XPGain = False
 
-    while i <= 3:
+    commonItemsMinCost = 10
+    commonItemsMaxCost = 30
+    rareItemsMinCost = 50
+    rareItemsMaxCost = 80
+    specialItemsMinCost = 300
+    specialItemsMaxCost = 500
+
+    # COST OF ITEMS
+    potionOfHealthCost = rng(commonItemsMinCost, commonItemsMaxCost)
+    potionOfMaxHealthBoostCost = rng(commonItemsMinCost, commonItemsMaxCost)
+    potionOfDamageBoostCost = rng(commonItemsMinCost, commonItemsMaxCost)
+
+    potionOfXpBoostCost = rng(rareItemsMinCost, rareItemsMaxCost)
+    potionOfXpGainCost = rng(rareItemsMinCost, rareItemsMaxCost)
+
+
+
+    # Number of Sections On The Market (Add If You Make A New One) Ex. XP Items
+    marketSections = 3
+
+    # Display Player Money
+    print(Fore.YELLOW + f"Your Coins: {Coin}")
+    print("----------------------------------------------------------------------------")
+
+    while i <= marketSections:
         i += 1
         RNG_ARRAY.append(rng(1, 2))
 
     # HEALING ITEM
     if RNG_ARRAY[0] == 1:
-        print(Fore.LIGHTRED_EX + "Item (1): Potion Of Health [Restore Health To Max Health]")
+        print(Fore.LIGHTRED_EX + "Item (1): Potion Of Health [Restore Health To Max Health]" + Fore.LIGHTYELLOW_EX + f"[Cost: {potionOfHealthCost}]")
         PotionOfHealActive = True
     elif RNG_ARRAY[0] == 2:
-        print(Fore.LIGHTRED_EX + "Item (1): Potion Of Max Health Boost [+10 Max Health]")
+        print(Fore.LIGHTRED_EX + "Item (1): Potion Of Max Health Boost [+10 Max Health]"  + Fore.LIGHTYELLOW_EX + f"[Cost: {potionOfMaxHealthBoostCost}]")
         PotionOfIncreaseHealthActive = True
 
     # DAMAGE ITEM
     if RNG_ARRAY[1] == 1:
-        print(Fore.BLUE + "Item (2): Damage Boosting Potion [+1 Strength]")
+        print(Fore.BLUE + "Item (2): Damage Boosting Potion [+1 Strength]" + Fore.LIGHTYELLOW_EX + f"[Cost: {potionOfDamageBoostCost}]")
         DamageBoostActive = True
     elif RNG_ARRAY[1] == 2:
-        print(Fore.LIGHTBLUE_EX + "Item (2): Damage Boosting Potion (+1 Strength)")
+        print(Fore.LIGHTBLUE_EX + "Item (2): Damage Boosting Potion (+1 Strength)" + Fore.LIGHTYELLOW_EX + f"[Cost: {potionOfDamageBoostCost}]")
         DamageBoostActive = True
 
     # XP ITEM
     if RNG_ARRAY[2] == 1:
-        print(Fore.LIGHTGREEN_EX + "Item (3): XP Boost Potion [+1 XP Per Battle]")
+        print(Fore.LIGHTGREEN_EX + "Item (3): XP Boost Potion [+1 XP Per Battle]" + Fore.LIGHTYELLOW_EX + f"[Cost: {potionOfXpBoostCost}]")
         XPBoost = True
 
     elif RNG_ARRAY[2] == 2:
-        print(Fore.LIGHTGREEN_EX + "Item (3): XP Gain Potion [+8 XP]")
+        print(Fore.LIGHTGREEN_EX + "Item (3): XP Gain Potion [+8 XP]" + Fore.LIGHTYELLOW_EX + f"[Cost: {potionOfXpGainCost}]")
         XPGain = True
 
+    # CLASS SPECIFIC ITEMS
+
+    #TODO: - create items that cater to specific kits, warrior-new move or something like that
+
+
+    print("----------------------------------------------------------------------------")
+    
+    # PLAYER CHOICE FOR ITEM
     userInput = input(">")
 
     if userInput == "1" and PotionOfHealActive:
-        Health = MaxHealth
-        PotionOfHealActive = False
-        print(f"Health Is Now -> {Health}")
-        print(" ")
-        input("Press Enter To Continue")
+        
+        if(Coin >= potionOfHealthCost):
+            Health = MaxHealth
+            PotionOfHealActive = False
+            Coin -= potionOfHealthCost
+            print(f"Health Is Now -> {Health}")
+            print(f"Coins Now At -> {Coin}")
+            print(" ")
+            input("Press Enter To Continue")
+        else:
+            print(Fore.LIGHTRED_EX + "Sorry You Don't Have Enough Coin For This Item")
+            input("Press Enter To Continue")
+        
+        
 
     elif userInput == "1" and PotionOfIncreaseHealthActive:
-        MaxHealth += 10
-        PotionOfIncreaseHealthActive = False
-        print(f"Max Health Is Now -> {MaxHealth}")
-        print(" ")
-        input("Press Enter To Continue")
+        
+        if(Coin >= potionOfMaxHealthBoostCost):
+            MaxHealth += 10
+            PotionOfIncreaseHealthActive = False
+            Coin -= potionOfMaxHealthBoostCost
+            print(f"Max Health Is Now -> {MaxHealth}")
+            print(f"Coins Now At -> {Coin}")
+            print(" ")
+            input("Press Enter To Continue")
+        else:
+            print(Fore.LIGHTRED_EX + "Sorry You Don't Have Enough Coin For This Item")
+            input("Press Enter To Continue")
+        
 
     elif userInput == "2" and DamageBoostActive:
-        Damage += 1
-        DamageBoostActive = False
-        print(f"Current Damage Is Now -> {Damage}")
-        print(" ")
-        input("Press Enter To Continue")
+        if(Coin >= potionOfDamageBoostCost):
+            Damage += 1
+            DamageBoostActive = False
+            Coin -= potionOfDamageBoostCost
+            print(f"Current Damage Is Now -> {Damage}")
+            print(f"Coins Now At -> {Coin}")
+            print(" ")
+            input("Press Enter To Continue")
+        else:
+            print(Fore.LIGHTRED_EX + "Sorry You Don't Have Enough Coin For This Item")
+            input("Press Enter To Continue")
+
+       
     elif userInput == "2" and DamageBoostActive:
-        Damage += 1
-        DamageBoostActive = False
-        print(f"Current Damage Is Now -> {Damage}")
-        print(" ")
-        input("Press Enter To Continue")
+        if(Coin >= potionOfDamageBoostCost):
+            Damage += 1
+            DamageBoostActive = False
+            Coin -= potionOfDamageBoostCost
+            print(f"Current Damage Is Now -> {Damage}")
+            print(f"Coins Now At -> {Coin}")
+            print(" ")
+            input("Press Enter To Continue")
+        else:
+            print(Fore.LIGHTRED_EX + "Sorry You Don't Have Enough Coin For This Item")
+            input("Press Enter To Continue")
 
     elif userInput == "3" and XPBoost:
-        XpGainPerEnemy += 1
-        XPBoost = False
-        print(f"XP Per Battle Is Now -> {XpGainPerEnemy}")
-        print(" ")
-        input("Press Enter To Continue")
+        if(Coin >= potionOfXpBoostCost):
+            XpGainPerEnemy += 1
+            XPBoost = False
+            Coin -= potionOfXpBoostCost
+            print(f"XP Per Battle Is Now -> {XpGainPerEnemy}")
+            print(f"Coins Now At -> {Coin}")
+            print(" ")
+            input("Press Enter To Continue")
+        else:
+            print(Fore.LIGHTRED_EX + "Sorry You Don't Have Enough Coin For This Item")
+            input("Press Enter To Continue")
 
     elif userInput == "3" and XPGain:
-        XP += 8
-        XPGain = False
-        print(f"Current XP Is Now -> {XP} / {MaxXP}")
-        print(" ")
-        input("Press Enter To Continue")
+        if(Coin >= potionOfXpGainCost):
+            XP += 8
+            XPGain = False
+            Coin -= potionOfXpGainCost
+            print(f"Current XP Is Now -> {XP} / {MaxXP}")
+            print(f"Coins Now At -> {Coin}")
+            print(" ")
+            input("Press Enter To Continue")
+        else:
+            print(Fore.LIGHTRED_EX + "Sorry You Don't Have Enough Coin For This Item")
+            input("Press Enter To Continue")
+
+
+    # Save Game After Shop Keeper
+    SAVE_GAME()
 
