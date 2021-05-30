@@ -5,28 +5,32 @@ from colorama import init
 from colorama import Fore, Back, Style
 import pyttsx3
 import pickle
+import os
 
 speechEngine = pyttsx3.init()
 
 # Colorama init
 init(autoreset=True)
 
-Damage = None
-XP = None
-MaxXP = None
+XpGainPerEnemy = 10
+
+Damage = 0
+XP = 0
+MaxXP = 0
 Kit = " "
-Health = None
-MaxHealth = None
-Level = None
+Health = 0
+MaxHealth = 0
+Level = 0
 Name = ""
-Coin = None
+Coin = 0
 
 speechEngineActive = False
 
 class create_new_Player:
-    def __init__(self, Name, Health, Mana, Kit, Level, XP, MaxXP, Damage):
+    def __init__(self, Name, Health, MaxHealth, Mana, Kit, Level, XP, MaxXP, Damage):
         self.Name = Name
         self.Health = Health
+        self.MaxHealth = MaxHealth
         self.Mana = Mana
         self.Kit = Kit
         self.Level = Level
@@ -83,7 +87,7 @@ def new_Player():
             Mana = 100
             Damage = 6
 
-        Player = create_new_Player(Name, Health, Mana, Kit, Level, XP, MaxXP, Damage)
+        Player = create_new_Player(Name, Health, MaxHealth, Mana, Kit, Level, XP, MaxXP, Damage)
         return Player
 
     except:
@@ -126,7 +130,7 @@ def continueOrShowStats(stats):
         userInput = input("Press Enter To Continue")
 
 def SAVE_GAME():
-    DATA_ARRAY = [Name, Level, Health, Mana, Kit, XP, MaxXP, Damage]
+    DATA_ARRAY = [Name, Level, Health, MaxHealth, Mana, Kit, XP, MaxXP, Damage]
     pickle.dump(DATA_ARRAY, open(f"Saved_Game_Data/{Name}.dat", "wb"))
 
 def Random_Shop_Keeper_Items():
@@ -134,6 +138,13 @@ def Random_Shop_Keeper_Items():
     global Damage
     global DamageBoostActive
     global Health
+    global PotionOfHealActive
+    global PotionOfIncreaseHealthActive
+    global XPBoost
+    global XPGain
+    global XP
+
+    global XpGainPerEnemy
 
     i = 0
     RNG_ARRAY = []
@@ -141,8 +152,9 @@ def Random_Shop_Keeper_Items():
     # Active Items In Shop
     PotionOfIncreaseHealthActive = False
     PotionOfHealActive = False
-
     DamageBoostActive = False
+    XPBoost = False
+    XPGain = False
 
     while i <= 3:
         i += 1
@@ -150,33 +162,69 @@ def Random_Shop_Keeper_Items():
 
     # HEALING ITEM
     if RNG_ARRAY[0] == 1:
-        print(Fore.LIGHTRED_EX + "Item (1): Potion Of Health (Restore Health To Max Health)")
+        print(Fore.LIGHTRED_EX + "Item (1): Potion Of Health [Restore Health To Max Health]")
         PotionOfHealActive = True
     elif RNG_ARRAY[0] == 2:
-        print("Item (1): Potion Of Max Health Boost (+10 Max Health)")
+        print(Fore.LIGHTRED_EX + "Item (1): Potion Of Max Health Boost [+10 Max Health]")
         PotionOfIncreaseHealthActive = True
 
     # DAMAGE ITEM
     if RNG_ARRAY[1] == 1:
-        print(Fore.BLUE + "Item (2): Damage Boosting Potion (+1 Strength)")
-        DamageBoost = True
+        print(Fore.BLUE + "Item (2): Damage Boosting Potion [+1 Strength]")
+        DamageBoostActive = True
     elif RNG_ARRAY[1] == 2:
-        print(Fore.BLUE + "Item (2): Damage Boosting Potion (+1 Strength)")
+        print(Fore.LIGHTBLUE_EX + "Item (2): Damage Boosting Potion (+1 Strength)")
+        DamageBoostActive = True
 
-    # OTHER ITEM
+    # XP ITEM
     if RNG_ARRAY[2] == 1:
-        print(Fore.GREEN + "Item (3): XP Boost Potion (+5 XP Per Battle)")
+        print(Fore.LIGHTGREEN_EX + "Item (3): XP Boost Potion [+1 XP Per Battle]")
+        XPBoost = True
+
     elif RNG_ARRAY[2] == 2:
-        print(Fore.GREEN + "Item (3): WIP")
+        print(Fore.LIGHTGREEN_EX + "Item (3): XP Gain Potion [+8 XP]")
+        XPGain = True
 
     userInput = input(">")
+
     if userInput == "1" and PotionOfHealActive:
         Health = MaxHealth
+        PotionOfHealActive = False
+        print(f"Health Is Now -> {Health}")
+        print(" ")
+        input("Press Enter To Continue")
 
     elif userInput == "1" and PotionOfIncreaseHealthActive:
         MaxHealth += 10
-        Health += 10
+        PotionOfIncreaseHealthActive = False
+        print(f"Max Health Is Now -> {MaxHealth}")
+        print(" ")
+        input("Press Enter To Continue")
 
     elif userInput == "2" and DamageBoostActive:
         Damage += 1
+        DamageBoostActive = False
+        print(f"Current Damage Is Now -> {Damage}")
+        print(" ")
+        input("Press Enter To Continue")
+    elif userInput == "2" and DamageBoostActive:
+        Damage += 1
+        DamageBoostActive = False
+        print(f"Current Damage Is Now -> {Damage}")
+        print(" ")
+        input("Press Enter To Continue")
+
+    elif userInput == "3" and XPBoost:
+        XpGainPerEnemy += 1
+        XPBoost = False
+        print(f"XP Per Battle Is Now -> {XpGainPerEnemy}")
+        print(" ")
+        input("Press Enter To Continue")
+
+    elif userInput == "3" and XPGain:
+        XP += 8
+        XPGain = False
+        print(f"Current XP Is Now -> {XP} / {MaxXP}")
+        print(" ")
+        input("Press Enter To Continue")
 

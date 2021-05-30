@@ -102,13 +102,14 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
         playerName = player.Name
         playerLevel = player.Level
         playerHealth = player.Health
+        playerMaxHealth = player.MaxHealth
         playerMana = player.Mana
         playerClass = player.Kit
         playerCurrentXP = player.XP
         playerMaxXP = player.MaxXP
         playerDamage = player.Damage
 
-        DATA = [playerName, playerLevel, playerHealth, playerMana, playerClass, playerCurrentXP, playerMaxXP, playerDamage]
+        DATA = [playerName, playerLevel, playerHealth, playerMaxHealth, playerMana, playerClass, playerCurrentXP, playerMaxXP, playerDamage]
 
         # Writing the save data for new player
         pickle.dump(DATA, open(f"Saved_Game_Data/{playerName}.dat", "wb"))
@@ -124,14 +125,15 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
             Library.Name = SaveLoaded[0]
             Library.Level = SaveLoaded[1]
             Library.Health = SaveLoaded[2]
-            Library.Mana = SaveLoaded[3]
-            Library.Kit = SaveLoaded[4]
-            Library.XP = SaveLoaded[5]
-            Library.MaxXP = SaveLoaded[6]
-            Library.Damage = SaveLoaded[7]
+            Library.MaxHealth = SaveLoaded[3]
+            Library.Mana = SaveLoaded[4]
+            Library.Kit = SaveLoaded[5]
+            Library.XP = SaveLoaded[6]
+            Library.MaxXP = SaveLoaded[7]
+            Library.Damage = SaveLoaded[8]
 
         except FileNotFoundError:
-            print(Fore.RED + "THE NAME YOU ENTERED DOES NOT EXIST.")
+            print(Fore.RED + "THE FILE-NAME YOU ENTERED DOES NOT EXIST.")
             input(" ")
             os.system('cls' if os.name == 'nt' else 'clear')
 
