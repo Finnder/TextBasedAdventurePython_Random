@@ -31,10 +31,12 @@ def intro():
 
 # Generates random path for player
 def NewPath():
+    os.system('cls' if os.name == 'nt' else 'clear')
     Paths.RandomPath()
 
 # Create A New Battle Sequence For Player
 def NewFight():
+    os.system('cls' if os.name == 'nt' else 'clear')
     Fights.RandomBasicEnemy()
 
 # Create A Shopkeeper

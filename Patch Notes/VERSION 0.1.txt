@@ -1,0 +1,14 @@
+=========================================
+Version: 0.1
+Date: 5/30/2021
+
+Patch Notes:
+--*NEW*--
+=> ADDED The Shop Keeper 
+=> ADDED Coin and Currency System
+=> ADDED Enemies Have Better Functionality and Can Defend themselves now 
+
+--*TWEAKS*--
+=> File Save System Has Been Redone and Reformated
+=> Other Stuff that I cant remember lol
+=========================================

@@ -13,6 +13,8 @@ import Paths
 # Colorama init
 init(autoreset=True)
 
+CurrentVersion = 0.1
+
 # Menu Music
 menuMusic = sa.WaveObject.from_wave_file('Music/menuMusic.wav')
 isMenuMusicActive = False
@@ -76,6 +78,7 @@ def options_Menu():
         os.system('cls' if os.name == 'nt' else 'clear')
         startup_Menu(isMenuMusicActive)
 
+
 def startup_Menu(music):
     if music:
         menuMusic.play()
@@ -86,10 +89,10 @@ def startup_Menu(music):
         f""" 
 Hello, Welcome To Finn's RPG and Text Base Adventure!!!
 -------------------------------------------------------
- -> New Game
- --> Continue
- ---> Options
- ----> Exit
+ -> New Game - 1
+ --> Continue - 2
+ ---> Options - 3
+ ----> Exit - 4
     """
     )
 
@@ -149,6 +152,8 @@ Hello, Welcome To Finn's RPG and Text Base Adventure!!!
 
     if user_Selection.lower() == "exit" or user_Selection == "4":
         quit()
+
+
 
 # Initial Start Up
 startup_Menu(isMenuMusicActive)

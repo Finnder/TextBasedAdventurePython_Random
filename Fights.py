@@ -56,7 +56,6 @@ def RandomBasicEnemy():
 
 # Enemy Random Move Event
 def Random_Move():
-    os.system('cls' if os.name == 'nt' else 'clear')
     move = random.randint(1, 2)
     if move == 1:
         EnemyAttacks()

@@ -170,19 +170,18 @@ def Random_Shop_Keeper_Items():
 
     commonItemsMinCost = 10
     commonItemsMaxCost = 30
-    rareItemsMinCost = 50
-    rareItemsMaxCost = 80
-    specialItemsMinCost = 300
-    specialItemsMaxCost = 500
+    rareItemsMinCost = 40
+    rareItemsMaxCost = 60
+    specialItemsMinCost = 100
+    specialItemsMaxCost = 200
 
     # COST OF ITEMS
     potionOfHealthCost = rng(commonItemsMinCost, commonItemsMaxCost)
-    potionOfMaxHealthBoostCost = rng(commonItemsMinCost, commonItemsMaxCost)
+    potionOfXpGainCost = rng(commonItemsMinCost, commonItemsMaxCost)
     
+    potionOfMaxHealthBoostCost = rng(rareItemsMinCost, rareItemsMaxCost)
     potionOfDamageBoostCost = rng(rareItemsMinCost, rareItemsMaxCost)
     potionOfXpBoostCost = rng(rareItemsMinCost, rareItemsMaxCost)
-    potionOfXpGainCost = rng(rareItemsMinCost, rareItemsMaxCost)
-
 
 
     # Number of Sections On The Market (Add If You Make A New One) Ex. XP Items
