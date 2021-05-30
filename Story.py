@@ -18,8 +18,6 @@ def intro():
     You feel a desire for adventure to see whats beyond the little village that has held you safe. 
     Your parents say you should stay in the village where its safe, but something is driving you to explore the world.
     """
-    storyPrint(text)
-
     print(" ")
     continueOrShowStats(True)
     NewPath()

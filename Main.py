@@ -33,7 +33,7 @@ def options_Menu():
         print(Fore.GREEN + Back.BLACK + "--- SAVED GAMES ---")
         for file in os.listdir('Saved_Game_Data'):
             if os.path.isfile(os.path.join('Saved_Game_Data', file)):
-                print(Back.BLACK + Fore.RED + file)
+                    print(Back.BLACK + Fore.RED + file)
 
         print(" ")
         input("Press Any Button To Continue")

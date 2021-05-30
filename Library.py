@@ -125,16 +125,16 @@ def continueOrShowStats(stats):
         userInput = input("Press Enter To Continue OR Type 1 To Show Your Stats")
         if userInput == "1":
             print(" ")
-            print("================|")
-            print(Fore.LIGHTGREEN_EX + f"Current XP: {XP}"+Fore.GREEN +  "   |")
-            print(Fore.GREEN + f"Max XP: {MaxXP}"+ Fore.GREEN + Fore.GREEN + "     |")
-            print(Fore.CYAN + f"Current Level: {Level}"+Fore.GREEN +  "|")
-            print(Fore.RED + f"Health: {Health}"+ Fore.GREEN + "     |")
-            print(Fore.LIGHTRED_EX + f"Damage: {Damage}" +Fore.GREEN +  "       |")
-            print(Fore.YELLOW + f"Coin: {Coin}"+ Fore.GREEN + "        |")
+            print("==================|")
+            print(Fore.LIGHTGREEN_EX + f"Current XP: {XP}")
+            print(Fore.GREEN + f"Max XP: {MaxXP}")
+            print(Fore.CYAN + f"Current Level: {Level}")
+            print(Fore.RED + f"Health: {Health}")
+            print(Fore.LIGHTRED_EX + f"Damage: {Damage}")
+            print(Fore.YELLOW + f"Coin: {Coin}")
             if Kit.lower() == "mage":
-                print(Fore.BLUE + f"Mana: {Mana}" + Fore.GREEN + "       |")
-            print("================|")
+                print(Fore.BLUE + f"Mana: {Mana}")
+            print("==================|")
             print(" ")
             continueOrShowStats(False)
 
@@ -178,8 +178,8 @@ def Random_Shop_Keeper_Items():
     # COST OF ITEMS
     potionOfHealthCost = rng(commonItemsMinCost, commonItemsMaxCost)
     potionOfMaxHealthBoostCost = rng(commonItemsMinCost, commonItemsMaxCost)
-    potionOfDamageBoostCost = rng(commonItemsMinCost, commonItemsMaxCost)
-
+    
+    potionOfDamageBoostCost = rng(rareItemsMinCost, rareItemsMaxCost)
     potionOfXpBoostCost = rng(rareItemsMinCost, rareItemsMaxCost)
     potionOfXpGainCost = rng(rareItemsMinCost, rareItemsMaxCost)
 
