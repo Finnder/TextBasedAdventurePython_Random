@@ -236,8 +236,8 @@ def Random_Shop_Keeper_Items():
             Health = MaxHealth
             PotionOfHealActive = False
             Coin -= potionOfHealthCost
-            print(f"Health Is Now -> {Health}")
-            print(f"Coins Now At -> {Coin}")
+            print(Fore.LIGHTGREEN_EX + f"Health Is Now -> {Health}")
+            print(Fore.YELLOW + f"Coins Now At -> {Coin}")
             print(" ")
             input("Press Enter To Continue")
         else:
@@ -253,7 +253,7 @@ def Random_Shop_Keeper_Items():
             PotionOfIncreaseHealthActive = False
             Coin -= potionOfMaxHealthBoostCost
             print(f"Max Health Is Now -> {MaxHealth}")
-            print(f"Coins Now At -> {Coin}")
+            print(Fore.YELLOW + f"Coins Now At -> {Coin}")
             print(" ")
             input("Press Enter To Continue")
         else:
@@ -266,8 +266,8 @@ def Random_Shop_Keeper_Items():
             Damage += 1
             DamageBoostActive = False
             Coin -= potionOfDamageBoostCost
-            print(f"Current Damage Is Now -> {Damage}")
-            print(f"Coins Now At -> {Coin}")
+            print(Fore.LIGHTRED_EX + f"Current Damage Is Now -> {Damage}")
+            print(Fore.YELLOW + f"Coins Now At -> {Coin}")
             print(" ")
             input("Press Enter To Continue")
         else:
@@ -280,8 +280,8 @@ def Random_Shop_Keeper_Items():
             Damage += 1
             DamageBoostActive = False
             Coin -= potionOfDamageBoostCost
-            print(f"Current Damage Is Now -> {Damage}")
-            print(f"Coins Now At -> {Coin}")
+            print(Fore.LIGHTRED_EX + f"Current Damage Is Now -> {Damage}")
+            print(Fore.YELLOW + f"Coins Now At -> {Coin}")
             print(" ")
             input("Press Enter To Continue")
         else:
@@ -294,7 +294,7 @@ def Random_Shop_Keeper_Items():
             XPBoost = False
             Coin -= potionOfXpBoostCost
             print(f"XP Per Battle Is Now -> {XpGainPerEnemy}")
-            print(f"Coins Now At -> {Coin}")
+            print(Fore.YELLOW + f"Coins Now At -> {Coin}")
             print(" ")
             input("Press Enter To Continue")
         else:
@@ -307,7 +307,7 @@ def Random_Shop_Keeper_Items():
             XPGain = False
             Coin -= potionOfXpGainCost
             print(f"Current XP Is Now -> {XP} / {MaxXP}")
-            print(f"Coins Now At -> {Coin}")
+            print(Fore.YELLOW + f"Coins Now At -> {Coin}")
             print(" ")
             input("Press Enter To Continue")
         else:
